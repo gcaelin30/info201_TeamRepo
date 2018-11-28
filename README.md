@@ -1,4 +1,5 @@
-# info201_TeamRepo
+# Existential Crisis Corporation Team Project
+## README file 
 Team Project for INFO 201 Technical Foundations:
 Project Requirements and Expectations:
 
@@ -31,9 +32,9 @@ Our target audience is anyone who is curious about the evolution or spread of cr
 ## What does your audience want to learn from your data? Please list out specific questions that your project will answer for your audience.   
 
 Seattleites can learn how the crime in Seattle has evolved over the years given.
-1) Where has the crime rate increased in the city since 2008 (Maxwell)
-2) Where is crime most prevalent in Seattle today
-3) What is the most recurring crime over the 10 years?
-4) What is the pervasiveness is sexual assault crimes in Seattle? (Godgiven)
+1) Where has the crime rate increased in the city since 2008?(Maxwell)
+2) What is the frequency of a given type of crime in a certain neighborhood, in a certain year?(Josh)
+3) What is the highest occuring crime for a certain year?(Roy)
+4) What is the pervasiveness of the various sexual assault crimes in Seattle throughout the years?(Godgiven)
 
 
