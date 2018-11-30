@@ -22,6 +22,7 @@ filtered_data <-
 }
 
 #SOURCE THIS FILE AND CALL THE filter_dates() FUNCTION IN YOUR FILE LIKE THIS EXAMPLE:
+#source("Filtered_data_range.R")
 # crime_data_08_thru_18 <- filter_dates("YOUR FILE PATH")
 
 
