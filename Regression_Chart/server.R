@@ -24,7 +24,8 @@ shinyServer(function(input, output) {
   output$plot <- renderPlot({
     plot_data <- prep_by_neighborhood(input$neighborhood)
 
-    ggplot(data = plot_data, aes(x=Month.Occurred, y=n, group =1)) +
+    ggplot(data = plot_data, aes(x=Year.Occurred
+                                 , y=n, group =1)) +
       geom_line()+
       geom
     
