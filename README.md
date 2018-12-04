@@ -1,6 +1,6 @@
 # Existential Crisis Corporation Project Proposal
 
-![](https://sintesistv.com.mx/wp-content/uploads/2017/04/escena-del-crimen.jpg)
+![](https://www.f-covers.com/cover/seattle-space-needle-1-facebook-cover-timeline-banner-for-fb.jpg)
 
 # Project Description: 
 
