@@ -23,18 +23,22 @@ shinyUI(navbarPage(theme=shinytheme("cerulean"),
                             plotOutput("crime", width=750, height = 500),
                             htmlOutput("crime_summary")
                           ))),
+                
+                
                  #-----Josh's UI--------
                  tabPanel("By Neighborhood",
-                          sidebarLayout(
-                            sidebarPanel(
-                              uiOutput("jyear"),
-                              uiOutput("jneighborhood")
-                            ),
-                            mainPanel(
-                              plotOutput("distPlot")
-                            )
-                          )
+                    sidebarLayout(
+                      sidebarPanel(
+                        uiOutput("jyear"),
+                        uiOutput("jneighborhood")
+                      ),
+                      mainPanel(
+                        plotOutput("distPlot")
+                      )
+                    )
                  ),
+                
+                
                  #------Godgiven's UI------
                  tabPanel("Sex Crimes",
                           fluidPage(
@@ -78,29 +82,23 @@ shinyUI(navbarPage(theme=shinytheme("cerulean"),
                               )
                               
                             )
-                            ))#,
+                            )),
                  #-----Maxwell's UI------
-                 # tabPanel("tab4",
-                 # 
-                 #          fluidPage(
-                 # 
-                 #            # Application title
-                 #            titlePanel("Crime Over Time"),
-                 # 
-                 #            # Sidebar with a slider input for number of bins
-                 #            sidebarLayout(
-                 #              sidebarPanel(
-                 #                uiOutput("neighborhood")
-                 #              ),
-                 # 
-                 #              # Show a plot of the generated distribution
-                 #              mainPanel(
-                 #                plotOutput("plot"),
-                 #                htmlOutput("m_crime_summary")
-                 #              )
-                 #            )
-                 #          ))
+                 tabPanel("Crime Over Time",
 
-                        )
+                            # Sidebar with a slider input for number of bins
+                            sidebarLayout(
+                              sidebarPanel(
+                                uiOutput("neighborhood")
+                              ),
+
+                              # Show a plot of the generated distribution
+                              mainPanel(
+                                plotOutput("plot"),
+                                htmlOutput("m_crime_summary")
+                              )
+                            )
+                          ))
+
+                        
   )
-#)
