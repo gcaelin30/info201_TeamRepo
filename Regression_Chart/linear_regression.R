@@ -17,9 +17,15 @@ prep_for_plotting <- function(data) {
     mutate("x_value" = row_number())
 }
 
-regression_for_plotting <- function(data){
-  x <- predict(lm(n ~ data$x_value, data = data))
+regressed_line <- function(data) {
+  x <- data %>% 
+    mutate('regressed_values' = predict(regression_info(data)))
 }
+
+regression_info <- function(data){
+  x <- lm(n ~ data$x_value, data = data)
+}
+
 
 prep_by_neighborhood <- function(neighborhood){
   x <- 
@@ -27,10 +33,3 @@ prep_by_neighborhood <- function(neighborhood){
     filter(Neighborhood == neighborhood) %>% 
     prep_for_plotting()
 }
-
-#data <- filter_by_neighborhood('CAPITOL HILL')
-
-
-
-#
-#
