@@ -14,7 +14,7 @@ ui <- fluidPage(
       
       selectInput(
         "crime",
-        label = h3("Selected a Type of Crime"),
+        label = ("Selected a Type of Crime"),
         choices = list("Aggravated Assault" = "AGGRAVATED ASSAULT",
                        "Domestic Violence"= "AGGRAVATED ASSAULT-DV",
                        "Pornography" = "PORNOGRAPHY",
@@ -32,7 +32,7 @@ ui <- fluidPage(
       # weighted font in bold
       # text aligned to center
       h3(span(textOutput("Quick_Summary"), 
-              style = "color:purple;font-weight:bold;text-align:center")),
+              style = "color:red;font-weight:bold;text-align:center")),
       
       # output of the plot
       plotOutput("misdeeds_bar")

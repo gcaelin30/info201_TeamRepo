@@ -4,7 +4,7 @@ library(lubridate)
 
 
 #put your file path to the Crime_Data.csv into this function to filter it to the appropriate years of interest for this project
-filter_dates <- function(Crime_data){
+filter_dates <- function(Crime_Data){
 
 crime_data <- read.csv("../Crime_Data.csv")  
   

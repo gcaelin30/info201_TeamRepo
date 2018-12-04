@@ -30,8 +30,9 @@ server <- function(input, output) {
     # 2008-2018 to sort through
     # we did this because there was already so much data dating back decades, and we decided that
     # those data points were irrelevant
-    filtered_crime <- filter_dates("Crime_data.csv")
+    filtered_crime <- filter_dates("./Crime_Data.csv")
 
+    # this is to filter specifically just the sex related crimes
     sex_crimes <- filter(filtered_crime, Crime.Subcategory == "AGGRAVATED ASSAULT" |
      Crime.Subcategory == "AGGRAVATED ASSAULT-DV" |
      Crime.Subcategory == "PORNOGRAPHY" |
@@ -39,12 +40,13 @@ server <- function(input, output) {
      Crime.Subcategory == "RAPE" |
      Crime.Subcategory =="SEX OFFENSE-OTHER") 
     
+    # this is so I can use it in the ggplot
     crime_plot <- filter(sex_crimes, sex_crimes$Crime.Subcategory==input$crime)
 
     
-#plot the data
-    ggplot(crime_plot, aes(Year.Occurred), fill = "purple")+
-    geom_bar()+
+#plot the data here
+    ggplot(crime_plot)+
+    geom_bar(mapping = aes(Year.Occurred), fill = "purple", color = "black")+
       labs(title = "Bar Graph of Types of Sexual Misconduct Cases through the years") +
       labs(x = "Years", y = "Number of Cases") +
       theme_classic()
