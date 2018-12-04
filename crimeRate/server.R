@@ -5,7 +5,7 @@ library(dplyr)
 library(magrittr)
 library(plyr)
 # sourcing the main function to work with our sorted data
-source("./Filtered_data_range.R")
+source("../Filtered_data_range.R")
 
 # Writing out logic here
 server <- function(input, output) {
@@ -43,10 +43,11 @@ server <- function(input, output) {
 
     
 #plot the data
-    ggplot(crime_plot, aes(Year.Occurred))+
+    ggplot(crime_plot, aes(Year.Occurred), fill = "purple")+
     geom_bar()+
       labs(title = "Bar Graph of Types of Sexual Misconduct Cases through the years") +
-      labs(x = "Years", y = "Number of Cases") 
+      labs(x = "Years", y = "Number of Cases") +
+      theme_classic()
 
   
   })
