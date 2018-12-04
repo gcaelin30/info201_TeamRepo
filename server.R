@@ -11,6 +11,14 @@ source("Filtered_data_range.R")
 
 shinyServer(function(input, output) {  
   
+  output$crime_pic <- renderImage({
+    return(list(
+      src="crime.png",
+      height=400,
+      width=300
+    ))
+  }, deleteFile = FALSE)
+  
   output$report_summary <- renderUI({
     HTML("This report was designed to serve as a tool to promote awareness",
          "and facilitate safe decision making in regards to crime trends in Seattle, Washington.<br/><br/>",
@@ -128,73 +136,73 @@ shinyServer(function(input, output) {
   })
   
 #---------------Maxwell's code below-----------------------------
-  
-  barely_filtered_data <- filter_dates("Crime_Data.csv") %>% manipulate_date()
-  
-  manipulate_date <- function(data) {
-    x <- data %>%
-      mutate(Month.Occurred = paste0(Year.Occurred,'.', month(Date.Occurred)))
-  }
-  
-  prep_for_plotting <- function(data) {
-    x <- 
-      data %>% 
-      group_by(Month.Occurred) %>% 
-      summarize(n = n()) %>% 
-      mutate("x_value" = row_number())
-  }
-  
-  regressed_line <- function(data) {
-    x <- data %>% 
-      mutate('regressed_values' = predict(regression_info(data)))
-  }
-  
-  regression_info <- function(data){
-    x <- lm(n ~ data$x_value, data = data)
-  }
-  
-  
-  prep_by_neighborhood <- function(neighborhood){
-    x <- 
-      barely_filtered_data %>%
-      filter(Neighborhood == neighborhood) %>% 
-      prep_for_plotting()
-  }
-  
-
-  output$neighborhood <- renderUI({
-    selectInput(
-      "neighborhood",
-      "Neighborhood:",
-      choices = unique(barely_filtered_data$Neighborhood))
-  })
-
-  output$plot <- renderPlot({
-    plot_data <- prep_by_neighborhood(input$neighborhood)
-
-    ggplot() +
-      geom_line(data = plot_data , aes(x = Month.Occurred, y = n, group = 1)) +
-      geom_line(data = regressed_line(plot_data), aes(x = Month.Occurred, y = regressed_values, group = 1), col = 'red') +
-      theme(axis.text.x = element_blank(), axis.ticks.x = element_blank()) +
-      labs(
-        title = 'Crimes Committed and Regression Plot',
-        x = "Date in Months from 2008-2018",
-        y = 'Number of Crimes Per Month')
-
-
-  })
-
-  output$m_crime_summary <- renderUI({
-    slope <- regression_info(prep_by_neighborhood(input$neighborhood))
-
-    text1m <- paste0( "<div align=center><br/><b>What Data does this Line Plot Represent</b></div><br/>",
-                     "The black line plots the number of crime occurences per month. The red line represents a linear
-                     regression of the same data. For this Neighborhood, the slope of the regressed line is </b>",
-                     round(as.numeric(slope$coef[2]),2), "<b><br/>")
-
-    HTML(paste(text1m,sep = "<br/><br/>"))
-  })
-  
+  # 
+  # barely_filtered_data <- filter_dates("Crime_Data.csv") %>% manipulate_date()
+  # 
+  # manipulate_date <- function(data) {
+  #   x <- data %>%
+  #     mutate(Month.Occurred = paste0(Year.Occurred,'.', month(Date.Occurred)))
+  # }
+  # 
+  # prep_for_plotting <- function(data) {
+  #   x <- 
+  #     data %>% 
+  #     group_by(Month.Occurred) %>% 
+  #     summarize(n = n()) %>% 
+  #     mutate("x_value" = row_number())
+  # }
+  # 
+  # regressed_line <- function(data) {
+  #   x <- data %>% 
+  #     mutate('regressed_values' = predict(regression_info(data)))
+  # }
+  # 
+  # regression_info <- function(data){
+  #   x <- lm(n ~ data$x_value, data = data)
+  # }
+  # 
+  # 
+  # prep_by_neighborhood <- function(neighborhood){
+  #   x <- 
+  #     barely_filtered_data %>%
+  #     filter(Neighborhood == neighborhood) %>% 
+  #     prep_for_plotting()
+  # }
+  # 
+  # 
+  # output$neighborhood <- renderUI({
+  #   selectInput(
+  #     "neighborhood",
+  #     "Neighborhood:",
+  #     choices = unique(barely_filtered_data$Neighborhood))
+  # })
+  # 
+  # output$plot <- renderPlot({
+  #   plot_data <- prep_by_neighborhood(input$neighborhood)
+  # 
+  #   ggplot() +
+  #     geom_line(data = plot_data , aes(x = Month.Occurred, y = n, group = 1)) +
+  #     geom_line(data = regressed_line(plot_data), aes(x = Month.Occurred, y = regressed_values, group = 1), col = 'red') +
+  #     theme(axis.text.x = element_blank(), axis.ticks.x = element_blank()) +
+  #     labs(
+  #       title = 'Crimes Committed and Regression Plot',
+  #       x = "Date in Months from 2008-2018",
+  #       y = 'Number of Crimes Per Month')
+  # 
+  # 
+  # })
+  # 
+  # output$m_crime_summary <- renderUI({
+  #   slope <- regression_info(prep_by_neighborhood(input$neighborhood))
+  # 
+  #   text1m <- paste0( "<div align=center><br/><b>What Data does this Line Plot Represent</b></div><br/>",
+  #                    "The black line plots the number of crime occurences per month. The red line represents a linear
+  #                    regression of the same data. For this Neighborhood, the slope of the regressed line is </b>",
+  #                    round(as.numeric(slope$coef[2]),2), "<b><br/>")
+  # 
+  #   HTML(paste(text1m,sep = "<br/><br/>"))
+  # })
+  # 
 #---------------Josh's code below--------------------------------
   
   filt_data <- filter_dates("Crime_Data.csv") %>% 

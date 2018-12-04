@@ -5,6 +5,7 @@ shinyUI(navbarPage(theme=shinytheme("cerulean"),
                    "",
                    tabPanel("Summary",
                      mainPanel(
+                       imageOutput("crime_pic"),
                        htmlOutput("report_summary")
                      )
                    ),
@@ -77,29 +78,29 @@ shinyUI(navbarPage(theme=shinytheme("cerulean"),
                               )
                               
                             )
-                            )),
+                            ))#,
                  #-----Maxwell's UI------
-                 tabPanel("tab4",
-
-                          shinyUI(fluidPage(
-
-                            # Application title
-                            titlePanel("Crime Over Time"),
-
-                            # Sidebar with a slider input for number of bins
-                            sidebarLayout(
-                              sidebarPanel(
-                                uiOutput("neighborhood")
-                              ),
-
-                              # Show a plot of the generated distribution
-                              mainPanel(
-                                plotOutput("plot"),
-                                htmlOutput("m_crime_summary")
-                              )
-                            )
-                          ))
+                 # tabPanel("tab4",
+                 # 
+                 #          fluidPage(
+                 # 
+                 #            # Application title
+                 #            titlePanel("Crime Over Time"),
+                 # 
+                 #            # Sidebar with a slider input for number of bins
+                 #            sidebarLayout(
+                 #              sidebarPanel(
+                 #                uiOutput("neighborhood")
+                 #              ),
+                 # 
+                 #              # Show a plot of the generated distribution
+                 #              mainPanel(
+                 #                plotOutput("plot"),
+                 #                htmlOutput("m_crime_summary")
+                 #              )
+                 #            )
+                 #          ))
 
                         )
   )
-)
+#)
