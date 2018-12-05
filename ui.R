@@ -1,5 +1,6 @@
 library(shiny)
 library(shinythemes)
+library(plotly)
 
 shinyUI(navbarPage(theme=shinytheme("cerulean"),
                    "",
@@ -30,10 +31,10 @@ shinyUI(navbarPage(theme=shinytheme("cerulean"),
                     sidebarLayout(
                       sidebarPanel(
                         uiOutput("jyear"),
-                        uiOutput("jneighborhood")
+                        uiOutput("jcrime")
                       ),
                       mainPanel(
-                        plotOutput("distPlot")
+                        plotOutput("distPlot", height = 650)
                       )
                     )
                  ),
@@ -46,8 +47,7 @@ shinyUI(navbarPage(theme=shinytheme("cerulean"),
                             # the title summarize the point of the histogram, which is to show the highest type of sexual
                             # misdeed of that certain year.
                             # this is to learn whether a certain type of sexual related crime was higher or lower in that year
-                            titlePanel("Select a Year to View the Highest Type of Sexual Related
-                                       Crime of That Year"),
+                            titlePanel("Select a crime to view the number of occurences from 2008-2018"),
                             sidebarLayout(
                               
                               # this is my side panel
@@ -57,7 +57,7 @@ shinyUI(navbarPage(theme=shinytheme("cerulean"),
                                 
                                 selectInput(
                                   "crime",
-                                  label = ("Selected a Type of Crime"),
+                                  label = ("Select a Type of Crime"),
                                   choices = list("Aggravated Assault" = "AGGRAVATED ASSAULT",
                                                  "Domestic Violence"= "AGGRAVATED ASSAULT-DV",
                                                  "Pornography" = "PORNOGRAPHY",
@@ -78,7 +78,7 @@ shinyUI(navbarPage(theme=shinytheme("cerulean"),
                                         style = "color:red;font-weight:bold;text-align:center")),
                                 
                                 # output of the plot
-                                plotOutput("misdeeds_bar")
+                                plotlyOutput("misdeeds_bar")
                               )
                               
                             )

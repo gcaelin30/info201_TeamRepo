@@ -3,6 +3,7 @@ library(shiny)
 library(dplyr)
 library(ggplot2)
 library(shinythemes)
+library(plotly)
 
 
 source("Filtered_data_range.R")
@@ -14,13 +15,13 @@ shinyServer(function(input, output) {
     return(list(
       src="crime.png",
       height=400,
-      width=300,
+      width=450,
       alt = "Image by Roy Mosby"
     ))
   }, deleteFile = FALSE)
   
   output$report_summary <- renderUI({
-    HTML("This report was designed to serve as a tool to promote awareness",
+    HTML("<br/><br/>This report was designed to serve as a tool to promote awareness",
          "and facilitate safe decision making in regards to crime trends in Seattle, Washington.<br/><br/>",
          
          "The dataset we utilized was published by the Seattle Police Department, and contains data about reported crimes",
@@ -73,16 +74,16 @@ shinyServer(function(input, output) {
       arrange(n)
     
     text1 <- paste0( "<div align=center><br/><b>What Questions does this data set answer</b></div><br/>",
-                     "<b>What is the total number of crimes recored in the year</b> ",input$year,"<br/>",
+                     "<b>What are the total number of crimes recorded in the year</b> ",input$year,"<br/>",
                      max_year, "<br/><br/>",
-                     "<b>What is the highest crime recorded in the year</b> ",input$year,"<br/>",
+                     "<b>What was the highest crime recorded in the year</b> ",input$year,"<br/>",
                      max_crime[[1,2]], "<br/><br/>",
-                     "<b>What is the occurrences</b><br/>",
+                     "<b>What are the occurrences</b><br/>",
                      max_crime[[1,3]], "<br/><br/>",
-                     "<b>What is the lowest crime recored in the year</b> ", input$year, "<br/>",
+                     "<b>What was the lowest crime recored in the year</b> ", input$year, "<br/>",
                      low_crime[[1,2]], "<br/><br/>", 
-                     "<b>What is the occureences</b><br/>",
-                     low_crime[[1,3]], "<br/>")
+                     "<b>What are the occurrences</b><br/>",
+                     low_crime[[1,3]], "<br/><br/><br/><br/>")
   
     
     HTML(paste(text1 ,sep = "<br/><br/>"))
@@ -105,7 +106,7 @@ shinyServer(function(input, output) {
   })
   
   # This plot is to render the output
-  output$misdeeds_bar <- renderPlot({
+  output$misdeeds_bar <- renderPlotly({
     
     # one of my teammates to on the task of filtering the data so that we only had
     # 2008-2018 to sort through
@@ -126,12 +127,13 @@ shinyServer(function(input, output) {
     
     
     #plot the data here
-    ggplot(crime_plot)+
+    p <- ggplot(crime_plot)+
       geom_bar(mapping = aes(Year.Occurred), fill = "purple", color = "black")+
       labs(title = "Bar Graph of Types of Sexual Misconduct Cases through the years") +
       labs(x = "Years", y = "Number of Cases") +
       theme_classic()
     
+    ggplotly(p) %>% config(displayModeBar = F)
     
   })
   
@@ -210,28 +212,34 @@ shinyServer(function(input, output) {
   output$jyear <- renderUI({
     selectInput(
       "jyear", 
-      "year:",
+      "Choose a Year:",
       choices = unique(filt_data$Year.Occurred))
   })
   
-  output$jneighborhood <- renderUI({
+  output$jcrime <- renderUI({
     selectInput(
-      "jneighborhood",
-      "Neighborhood:",
-      choices = unique(filt_data$Neighborhood))
+      "jcrime",
+      "Choose a Crime:",
+      choices = unique(filt_data$Crime.Subcategory))
   })
   
   output$distPlot <- renderPlot({
     
-    plot_data <- filter(filt_data, filt_data$Year.Occurred == input$jyear & filt_data$Neighborhood == input$jneighborhood)
-    ggplot(plot_data, aes(plot_data$Crime.Subcategory, fill=Crime.Subcategory)) + 
+    plot_data <- filter(filt_data, filt_data$Year.Occurred == input$jyear & filt_data$Crime.Subcategory == input$jcrime) 
+    
+    max_neighborhood <- filt_data %>%
+      filter(Year.Occurred == input$jyear) %>%
+      group_by(Year.Occurred, Crime.Subcategory, Neighborhood) %>%
+      summarise(n = n()) %>%
+      arrange(-n)
+    
+    ggplot(plot_data, aes(plot_data$Neighborhood)) + 
       geom_bar() + 
       coord_flip() + 
       guides(fill=FALSE) + 
-      xlab("") +
-      ylab("Occurences")
+      xlab("Neighborhoods") +
+      ylab("Occurences") 
     
   })
-  
   
 })
